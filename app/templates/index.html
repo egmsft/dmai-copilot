@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Incident Reporting</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Health, Safety, and Environmental Incidents</h1>
+        <a href="{{ url_for('report') }}">Report New Incident</a>
+        <h2>Reported Incidents</h2>
+        {% if incidents %}
+            <ul class="incident-list">
+            {% for incident in incidents %}
+                <li>
+                    <span class="incident-type">{{ incident.type }}</span>
+                    <span class="incident-date">on {{ incident.date }}</span>
+                    <div class="incident-description">{{ incident.description }}</div>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No incidents reported yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
