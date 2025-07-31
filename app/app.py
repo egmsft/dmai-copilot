@@ -15,7 +15,8 @@ def report():
         incident = {
             'type': request.form['type'],
             'description': request.form['description'],
-            'date': request.form['date']
+            'date': request.form['date'],
+            'department': request.form['department']
         }
         incidents.append(incident)
         return redirect(url_for('index'))

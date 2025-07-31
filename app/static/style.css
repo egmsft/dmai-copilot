@@ -69,6 +69,11 @@ ul.incident-list li {
     font-size: 0.95em;
     color: #607d8b;
 }
+.incident-department {
+    font-size: 0.95em;
+    color: #607d8b;
+    font-style: italic;
+}
 .incident-description {
     margin-top: 8px;
     color: #263238;
