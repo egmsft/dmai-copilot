@@ -9,6 +9,20 @@
     <div class="container">
         <h1>Health, Safety, and Environmental Incidents @DMAI Houston</h1>
         <a href="{{ url_for('report') }}">Report New Incident</a>
+        
+        <!-- Department Filter -->
+        <div class="filter-section">
+            <form method="get" id="filterForm">
+                <label for="department">Filter by Department:</label>
+                <select name="department" id="department" onchange="document.getElementById('filterForm').submit();">
+                    <option value="">All Departments</option>
+                    {% for dept in departments %}
+                        <option value="{{ dept }}" {% if dept == selected_department %}selected{% endif %}>{{ dept }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+        
         <h2>Reported Incidents</h2>
         {% if incidents %}
             <ul class="incident-list">

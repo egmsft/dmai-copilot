@@ -78,3 +78,24 @@ ul.incident-list li {
     margin-top: 8px;
     color: #263238;
 }
+.filter-section {
+    margin: 20px 0;
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+}
+.filter-section label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #2a3b4c;
+}
+.filter-section select {
+    width: 250px;
+    padding: 8px;
+    border: 1px solid #b0bec5;
+    border-radius: 4px;
+    font-size: 1em;
+    background: #fff;
+}
