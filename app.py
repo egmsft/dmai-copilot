@@ -19,10 +19,22 @@ def index():
     # Get unique departments from all incidents for the dropdown
     departments = sorted(list(set(incident['department'] for incident in incidents)))
     
+    # Calculate incident statistics for the chart
+    incident_stats = {'Health': 0, 'Safety': 0, 'Environmental': 0}
+    for incident in filtered_incidents:
+        incident_type = incident['type']
+        if incident_type in incident_stats:
+            incident_stats[incident_type] += 1
+    
+    # Calculate max value for chart scaling
+    max_count = max(incident_stats.values()) if incident_stats.values() else 0
+    
     return render_template('index.html', 
                          incidents=filtered_incidents, 
                          departments=departments,
-                         selected_department=department_filter)
+                         selected_department=department_filter,
+                         incident_stats=incident_stats,
+                         max_count=max_count)
 
 @app.route('/report', methods=['GET', 'POST'])
 def report():
