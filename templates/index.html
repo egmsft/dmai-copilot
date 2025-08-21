@@ -23,6 +23,22 @@
             </form>
         </div>
         
+        <!-- Incident Statistics Chart -->
+        <div class="chart-section">
+            <h3>HSE Incidents</h3>
+            <div class="bar-chart">
+                {% for type, count in incident_stats.items() %}
+                <div class="chart-bar-container">
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar-count">{{ count }}</div>
+                        <div class="chart-bar chart-bar-{{ type.lower() }}" style="height: {% if max_count > 0 %}{{ (count / max_count) * 100 }}%{% else %}0%{% endif %};"></div>
+                    </div>
+                    <div class="chart-label">{{ type.lower() }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
         <h2>Reported Incidents</h2>
         {% if incidents %}
             <ul class="incident-list">
