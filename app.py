@@ -1,9 +1,27 @@
 from flask import Flask, render_template, request, redirect, url_for
+from datetime import datetime, date
 
 app = Flask(__name__)
 
 # In-memory storage for incidents (for demo purposes)
 incidents = []
+
+def calculate_incident_free_days():
+    """Calculate the number of days since the last incident"""
+    if not incidents:
+        return None  # No incidents means "Incident-free year!"
+    
+    # Find the most recent incident date
+    most_recent_date = None
+    for incident in incidents:
+        incident_date = datetime.strptime(incident['date'], '%Y-%m-%d').date()
+        if most_recent_date is None or incident_date > most_recent_date:
+            most_recent_date = incident_date
+    
+    # Calculate days since the most recent incident
+    today = date.today()
+    days_since = (today - most_recent_date).days
+    return days_since
 
 @app.route('/')
 def index():
@@ -29,12 +47,16 @@ def index():
     # Calculate max value for chart scaling
     max_count = max(incident_stats.values()) if incident_stats.values() else 0
     
+    # Calculate incident-free days
+    incident_free_days = calculate_incident_free_days()
+    
     return render_template('index.html', 
                          incidents=filtered_incidents, 
                          departments=departments,
                          selected_department=department_filter,
                          incident_stats=incident_stats,
-                         max_count=max_count)
+                         max_count=max_count,
+                         incident_free_days=incident_free_days)
 
 @app.route('/report', methods=['GET', 'POST'])
 def report():
