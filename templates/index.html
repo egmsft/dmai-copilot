@@ -23,6 +23,19 @@
             </form>
         </div>
         
+        <!-- Incident-Free Days Banner -->
+        <div class="incident-free-banner">
+            {% if incident_free_days is none %}
+                <h2>Incident-free year!</h2>
+            {% elif incident_free_days == 0 %}
+                <h2>Incident reported today</h2>
+            {% elif incident_free_days == 1 %}
+                <h2>Incident-free for 1 day</h2>
+            {% else %}
+                <h2>Incident-free for {{ incident_free_days }} days</h2>
+            {% endif %}
+        </div>
+        
         <!-- Incident Statistics Chart -->
         <div class="chart-section">
             <h3>HSE Incidents</h3>
