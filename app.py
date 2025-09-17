@@ -6,6 +6,12 @@ app = Flask(__name__)
 # In-memory storage for incidents (for demo purposes)
 incidents = []
 
+# Add IDs to existing incidents if they don't have them
+def ensure_incident_ids():
+    for i, incident in enumerate(incidents):
+        if 'id' not in incident:
+            incident['id'] = i + 1
+
 def calculate_incident_free_days():
     """Calculate the number of days since the last incident"""
     if not incidents:
@@ -25,6 +31,9 @@ def calculate_incident_free_days():
 
 @app.route('/')
 def index():
+    # Ensure all incidents have IDs
+    ensure_incident_ids()
+    
     # Get the department filter from query parameters
     department_filter = request.args.get('department', '')
     
@@ -61,7 +70,10 @@ def index():
 @app.route('/report', methods=['GET', 'POST'])
 def report():
     if request.method == 'POST':
+        # Generate a unique ID for the incident
+        incident_id = len(incidents) + 1
         incident = {
+            'id': incident_id,
             'type': request.form['type'],
             'description': request.form['description'],
             'date': request.form['date'],
@@ -70,6 +82,33 @@ def report():
         incidents.append(incident)
         return redirect(url_for('index'))
     return render_template('report.html')
+
+@app.route('/edit/<int:incident_id>', methods=['GET', 'POST'])
+def edit_incident(incident_id):
+    # Find the incident to edit
+    incident = None
+    incident_index = None
+    for i, inc in enumerate(incidents):
+        if inc['id'] == incident_id:
+            incident = inc
+            incident_index = i
+            break
+    
+    if incident is None:
+        return redirect(url_for('index'))  # Incident not found, redirect to home
+    
+    if request.method == 'POST':
+        # Update the incident
+        incidents[incident_index] = {
+            'id': incident_id,
+            'type': request.form['type'],
+            'description': request.form['description'],
+            'date': request.form['date'],
+            'department': request.form['department']
+        }
+        return redirect(url_for('index'))
+    
+    return render_template('edit.html', incident=incident)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Incident</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Health, Safety, or Environmental Incident</h1>
+        <form method="post">
+            <label for="type">Type:</label>
+            <select name="type" id="type" required>
+                <option value="Health" {% if incident.type == 'Health' %}selected{% endif %}>Health</option>
+                <option value="Safety" {% if incident.type == 'Safety' %}selected{% endif %}>Safety</option>
+                <option value="Environmental" {% if incident.type == 'Environmental' %}selected{% endif %}>Environmental</option>
+            </select>
+            <label for="department">Department:</label>
+            <select name="department" id="department" required>
+                <option value="Drilling" {% if incident.department == 'Drilling' %}selected{% endif %}>Drilling</option>
+                <option value="Exploration" {% if incident.department == 'Exploration' %}selected{% endif %}>Exploration</option>
+                <option value="Refining" {% if incident.department == 'Refining' %}selected{% endif %}>Refining</option>
+                <option value="Operations" {% if incident.department == 'Operations' %}selected{% endif %}>Operations</option>
+                <option value="Logistics" {% if incident.department == 'Logistics' %}selected{% endif %}>Logistics</option>
+            </select>
+            <label for="date">Date:</label>
+            <input type="date" name="date" id="date" value="{{ incident.date }}" required>
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" rows="4" required>{{ incident.description }}</textarea>
+            <button type="submit">Update</button>
+        </form>
+        <br>
+        <a href="{{ url_for('index') }}">Back to Incident List</a>
+    </div>
+</body>
+</html>

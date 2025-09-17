@@ -60,6 +60,27 @@ ul.incident-list li {
     padding: 16px;
     border-radius: 6px;
     border-left: 5px solid #1976d2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.incident-content {
+    flex: 1;
+}
+.incident-actions {
+    margin-left: 16px;
+}
+.edit-link {
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+.edit-link:hover {
+    background-color: rgba(25, 118, 210, 0.1);
+    text-decoration: none;
 }
 .incident-type {
     font-weight: bold;
